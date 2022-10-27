@@ -1,4 +1,6 @@
 /* eslint-disable jest/expect-expect */
+import { fetchBooks } from '../../utils/fetchBooks';
+import { currencyKR } from '../../utils/index';
 
 // -----------------------------------------------------------------------------
 // TODO & TEST
@@ -11,14 +13,25 @@
 // 도서 목록 가져오기
 // -----------------------------------------------------------------------------
 
-function getBooks() {
+async function getBooks() {
   // 모든 도서 목록을 가져온 후, 목록을 순환하여 가격을 "원"화로 변경합니다.
+  try {
+    let data = await fetchBooks();
+    return new Promise((res,rej) => {
+      res(data.map(v => ({...v,price:currencyKR(v.price)})))
+    });
+  } catch(e) {
+    console.error(e.message);
+  }
   // 통신에 실패한 경우 오류 메시지를 throw 합니다.
 }
 
-test('도서 목록 가져오기', () => {
+test.only('도서 목록 가져오기', async () => {
   // 테스트 코드 작성
-  getBooks();
+  const data = await getBooks();
+  data.forEach(v => {
+    expect(v.price).toBe(v.price)
+  })
 });
 
 // -----------------------------------------------------------------------------
