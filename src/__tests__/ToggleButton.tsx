@@ -15,7 +15,6 @@ function ToggleButton({
 }: ToggleButtonProps) {
   return <button type="button">{on ? onText : offText}</button>;
 }
-
 /* -------------------------------------------------------------------------- */
 
 test('비활성 또는 활성 상태의 ToggleButton이 포함하는 텍스트는 "OFF" 또는 "ON" 이다.', () => {
@@ -23,9 +22,12 @@ test('비활성 또는 활성 상태의 ToggleButton이 포함하는 텍스트�
   let activeElement = screen.getByText('OFF');
   expect(activeElement).toBeInTheDocument();
 
+
   cleanup();
 
   render(<ToggleButton on />);
   activeElement = screen.getByText('ON');
   expect(activeElement).toBeInTheDocument();
+
+  screen.debug();
 });
